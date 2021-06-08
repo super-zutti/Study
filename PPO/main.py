@@ -6,15 +6,16 @@ from utils import plot_learning_curve
 
 if __name__ == '__main__':
     render_on = False
-    env = gym.make('gym_robot_arm:robot-arm-v0')
+    env = gym.make('gym_robot_arm:robot-arm-v1')
     #env = gym.make('CartPole-v0')
     n_episode = 100
     n_learn_step = 50
     n_iter = 100
     batch_size = 64
     n_epochs = 10
+    #alpha = 0.09
     alpha = 0.0003
-    agent = Agent(n_actions=env.action_space.n, batch_size=batch_size, 
+    agent = Agent(n_actions=env.action_space.shape, batch_size=batch_size, 
                     alpha=alpha, n_epochs=n_epochs, 
                     input_dims=env.observation_space.shape)
     

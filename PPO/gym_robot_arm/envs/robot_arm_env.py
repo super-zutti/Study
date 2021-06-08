@@ -154,8 +154,10 @@ class RobotArmEnvV0(gym.Env):
         if distance_error >= self.current_error:
             reward = -1
         epsilon = 10
+        # if distance_error < self.current_error:
+        #     reward = 1
         if (distance_error > -epsilon and distance_error < epsilon):
-            reward = 1
+             reward = 1
 
         self.current_error = distance_error
         self.current_score += reward
