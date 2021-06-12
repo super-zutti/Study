@@ -12,14 +12,13 @@ class LogAnalysis:
     def __init__(self):
        self.gui_size = 0;
        self.color = 'ivory2'
+       self.root = tk.Tk()
+       self.root.title(u"Log Analysis")
+       self.root.geometry("1000x800")
+       self.root.resizable(width=False, height=False)
+       self.root.configure(bg=self.color)
 
     def MainGUI(self):
-        self.root = tk.Tk()
-        self.root.title(u"Log Analysis")
-        self.root.geometry("1000x800")
-        self.root.resizable(width=False, height=False)
-        self.root.configure(bg=self.color)
-        
         # ログ表示ウインドウ
         self.ShowLogWindowModule()
         
@@ -148,7 +147,7 @@ class LogAnalysis:
 
         # ボタン2:計算開始
         FontStyle3 = tkFont.Font(family="Lucida Grande", size=10)
-        self.Button2 = tk.Button(self.Frame4, text=u'経過時間計算', font=FontStyle3, width=20, relief='raised')
+        self.Button2 = tk.Button(self.Frame4, text=u'経過時間算出', font=FontStyle3, width=20, relief='raised')
         self.Button2.bind("<Button-1>",self.CalcStart)
         self.Button2.pack(side='left', padx=17)
         # ボックス3
@@ -159,15 +158,21 @@ class LogAnalysis:
         str_start = self.EditBox1.get();
         str_end   = self.EditBox2.get();
         try:
-            t_start = dt.datetime(int(str_start[0:4]), int(str_start[5:7]), int(str_start[7:9]),\
-                                int(str_start[10:12]), int(str_start[13:15]), int(str_start[16:18]), int(str_start[19:22]+'000'))
+            idx1 = int(str_start.find('] ')) + 2 #2021の先頭の位置の位置分スライドさせる
+            t_start = dt.datetime(int(str_start[idx1+0:idx1+4]), int(str_start[idx1+5:idx1+7]),\
+                                  int(str_start[idx1+7:idx1+9]), int(str_start[idx1+10:idx1+12]),\
+                                  int(str_start[idx1+13:idx1+15]), int(str_start[idx1+16:idx1+18]),\
+                                  int(str_start[idx1+19:idx1+22]+'000'))
         except:
             tk.messagebox.showinfo('Warning!','開始STEPが間違っています')
             self.EditBox3.delete(0, tk.END)
             return "break"
         try:
-            t_end   = dt.datetime(int(str_end[0:4]), int(str_end[5:7]), int(str_end[7:9]),\
-                                int(str_end[10:12]), int(str_end[13:15]), int(str_end[16:18]), int(str_end[19:22]+'000'))
+            idx2 = int(str_end.find('] ')) + 2 #2021の先頭の位置分スライドさせる
+            t_end   = dt.datetime(int(str_end[idx2+0:idx2+4]), int(str_end[idx2+5:idx2+7]),\
+                                  int(str_end[idx2+7:idx2+9]), int(str_end[idx2+10:idx2+12]),\
+                                  int(str_end[idx2+13:idx2+15]), int(str_end[idx2+16:idx2+18]),\
+                                  int(str_end[idx2+19:idx2+22]+'000'))
         except:
             tk.messagebox.showinfo('Warning!','終了STEPが間違っています')
             self.EditBox3.delete(0, tk.END)
@@ -229,5 +234,6 @@ class LogAnalysis:
             return
         self.lines = self.LogFile.readlines()
         for i in range(len(self.lines)):
+            self.lines[i] = '['+str(i)+'] '+self.lines[i]
             self.Listbox.insert(END,self.lines[i])
         
