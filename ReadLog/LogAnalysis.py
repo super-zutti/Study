@@ -11,12 +11,14 @@ import datetime as dt
 class LogAnalysis:
     def __init__(self):
        self.gui_size = 0;
-       self.color = 'ivory2'
+       self.colorlist = ['black','red','blue','ivory2','gold2','light cyan']
+       self.backgroundcolor = self.colorlist[3]
+       self.textcolor = self.colorlist[0]
        self.root = tk.Tk()
        self.root.title(u"Log解析")
-       self.root.geometry("1000x850")
+       self.root.geometry("1000x820")
        self.root.resizable(width=False, height=False)
-       self.root.configure(bg=self.color)
+       self.root.configure(bg=self.backgroundcolor)
 
     def MainGUI(self):
         # ログ表示ウインドウ
@@ -37,7 +39,7 @@ class LogAnalysis:
         # csv出力
         self.SaveFileModule()
 
-        # ×ボタン
+        # ×ボタン押すと終了
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
 
         self.root.mainloop()
@@ -54,7 +56,7 @@ class LogAnalysis:
         # LogWindow用フレームの作成
         self.Frame1 = tk.Frame(self.root, width=1000, height=300, relief = tk.SUNKEN, bd=0, bg='gray')
         self.Frame1.pack(side='top', fill='x')
-        self.Frame1.configure(bg=self.color)
+        self.Frame1.configure(bg=self.backgroundcolor)
 
         # Listボックスとスクロールバー
         self.lists_init = tk.StringVar(value=[])
@@ -100,7 +102,7 @@ class LogAnalysis:
         # LogWindow用フレームの作成
         self.Frame2 = tk.Frame(self.root, width=900, height=10, relief = tk.SUNKEN, bd=0)
         self.Frame2.pack(side='top', fill='x')
-        self.Frame2.configure(bg=self.color)
+        self.Frame2.configure(bg=self.backgroundcolor)
 
         # ボタン1:ログファイル選択
         self.Button1 = tk.Button(self.Frame2, text=u'Logファイル選択', width=130, relief='raised')
@@ -111,12 +113,12 @@ class LogAnalysis:
         # フレームの作成
         self.Frame3 = tk.Frame(self.root, width=900, height=80, relief = tk.SUNKEN, bd=0)
         self.Frame3.pack(side='top', fill='x', pady=10)
-        self.Frame3.configure(bg=self.color)
+        self.Frame3.configure(bg=self.backgroundcolor)
         
         # ラベル1
         FontStyle1 = tkFont.Font(family="Lucida Grande", size=12)
-        self.Static1 = tk.Label(self.Frame3, text=u'開始STEP', font=FontStyle1, width=20)
-        self.Static1.configure(bg=self.color)
+        self.Static1 = tk.Label(self.Frame3, text=u'開始STEP', font=FontStyle1, width=20, fg=self.textcolor)
+        self.Static1.configure(bg=self.backgroundcolor)
         self.Static1.pack(side='left')
         
         # ボックス1
@@ -126,12 +128,12 @@ class LogAnalysis:
         # フレームの作成
         self.Frame3_5 = tk.Frame(self.root, width=900, height=80, relief = tk.SUNKEN, bd=0)
         self.Frame3_5.pack(side='top', fill='x')
-        self.Frame3_5.configure(bg=self.color)
+        self.Frame3_5.configure(bg=self.backgroundcolor)
 
         # ラベル2
         FontStyle2 = tkFont.Font(family="Lucida Grande", size=12)
-        self.Static2 = tk.Label(self.Frame3_5, text=u'終了STEP', font=FontStyle2, width=20)
-        self.Static2.configure(bg=self.color)
+        self.Static2 = tk.Label(self.Frame3_5, text=u'終了STEP', font=FontStyle2, width=20, fg=self.textcolor)
+        self.Static2.configure(bg=self.backgroundcolor)
         self.Static2.pack(side='left')
         # ボックス2
         self.EditBox2 = tk.Entry(self.Frame3_5, width=130)
@@ -188,7 +190,7 @@ class LogAnalysis:
         # フレームの作成
         self.Frame4 = tk.Frame(self.root, width=900, height=80, relief = tk.SUNKEN, bd=0)
         self.Frame4.pack(side='top', fill='x', pady=15)
-        self.Frame4.configure(bg=self.color)
+        self.Frame4.configure(bg=self.backgroundcolor)
 
         # ボタン2:計算開始
         FontStyle3 = tkFont.Font(family="Lucida Grande", size=10)
@@ -231,12 +233,12 @@ class LogAnalysis:
         # 大フレーム
         self.FrameBig = tk.Frame(self.root, width=900, height=300, relief = 'groove', bd=2)
         self.FrameBig.pack(side='top', fill='x', padx=10, pady=10)
-        self.FrameBig.configure(bg=self.color)
+        self.FrameBig.configure(bg=self.backgroundcolor)
         
         # Frame5
         self.Frame5 = tk.Frame(self.FrameBig, width=900, height=20, relief = 'flat', bd=0)
         self.Frame5.pack(side='top', fill='x', padx=10, pady=15)
-        self.Frame5.configure(bg=self.color)
+        self.Frame5.configure(bg=self.backgroundcolor)
         
         # ボタン3：一括計算開始ボタン
         FontStyle5 = tkFont.Font(family="Lucida Grande", size=10)
@@ -255,8 +257,8 @@ class LogAnalysis:
 
         # ラベル3
         FontStyle3 = tkFont.Font(family="Lucida Grande", size=12)
-        self.Static3 = tk.Label(self.Frame5, text=u'から', font=FontStyle3, width=10)
-        self.Static3.configure(bg=self.color)
+        self.Static3 = tk.Label(self.Frame5, text=u'から', font=FontStyle3, width=10, fg=self.textcolor)
+        self.Static3.configure(bg=self.backgroundcolor)
         self.Static3.grid(row=0, column=2)
 
         # 終了コマンド選択
@@ -270,15 +272,15 @@ class LogAnalysis:
 
         # ラベル4
         FontStyle4 = tkFont.Font(family="Lucida Grande", size=12)
-        self.Static4 = tk.Label(self.Frame5, text=u'までの経過時間を一括算出', font=FontStyle4, width=30)
-        self.Static4.configure(bg=self.color)
+        self.Static4 = tk.Label(self.Frame5, text=u'までの経過時間を一括算出', font=FontStyle4, width=30, fg=self.textcolor)
+        self.Static4.configure(bg=self.backgroundcolor)
         self.Static4.grid(row=0, column=4)
 
         ###############################################################################################
         # Frame6
         self.Frame6 = tk.Frame(self.FrameBig, width=900, height=200, relief = 'flat', bd=0)
         self.Frame6.pack(side='top', fill='x', padx=10, pady=10)
-        self.Frame6.configure(bg=self.color)
+        self.Frame6.configure(bg=self.backgroundcolor)
 
         # Listボックスとスクロールバー:検索結果表示用(start)
         self.lists_init = tk.StringVar(value=[])
@@ -331,14 +333,14 @@ class LogAnalysis:
         # Frame7
         self.Frame7 = tk.Frame(self.FrameBig, width=900, height=50, relief = 'flat', bd=0)
         self.Frame7.pack(side='top', fill='x', padx=10, pady=10)
-        self.Frame7.configure(bg=self.color)
+        self.Frame7.configure(bg=self.backgroundcolor)
         # ボックス4
         self.EditBox4 = tk.Entry(self.Frame7, width=30)
         self.EditBox4.pack(side='right', padx=20)
         # ラベル5
         FontStyle5 = tkFont.Font(family="Lucida Grande", size=12)
         self.Static5 = tk.Label(self.Frame7, text=u'平均値', font=FontStyle5, width=10)
-        self.Static5.configure(bg=self.color)
+        self.Static5.configure(bg=self.backgroundcolor)
         self.Static5.pack(side='right')
 
     def DeleteStep1(self):
@@ -435,10 +437,10 @@ class LogAnalysis:
         # Frame8
         self.Frame8 = tk.Frame(self.FrameBig, width=900, height=50, relief = 'flat', bd=0)
         self.Frame8.pack(side='top', fill='x', padx=15, pady=10)
-        self.Frame8.configure(bg=self.color)
+        self.Frame8.configure(bg=self.backgroundcolor)
         # ボタン4：保存ボタン
         FontStyle6 = tkFont.Font(family="Lucida Grande", size=12)
-        self.Button4 = tk.Button(self.Frame8, text=u'算出結果保存', font=FontStyle6, width=20, relief='raised')
+        self.Button4 = tk.Button(self.Frame8, text=u'csv出力', font=FontStyle6, width=15, relief='raised')
         self.Button4.bind("<Button-1>",self.SaveFile)
         self.Button4.pack(side='right')
 
@@ -448,11 +450,16 @@ class LogAnalysis:
             ret = tk.filedialog.asksaveasfile(defaultextension='csv' ,filetypes=f_type, title='名前を付けて保存')
             if ret==None:
                 return "break"
+            # リストの結合
+            elapsedTimeList = []
+            for i in range(min(len(self.startIdx),len(self.endIdx))):
+                elapsedTimeList = elapsedTimeList + [self.Listbox4.get(i).replace('[s]', '')]
+            # ファイルに書き込み
             with open(ret.name, 'w') as f:
-                f.write('ここに保存したい内容か？')
+                f.write(','.join(elapsedTimeList))
             return "break"
         except:
-            tk.messagebox.showinfo('Warning!','保存失敗!')
+            tk.messagebox.showinfo('Warning!','算出結果の保存に失敗しました')
             return "break"
 
 if __name__ == "__main__":
